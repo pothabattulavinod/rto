@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Search Vehicle Info</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f7f7f7;
+      padding: 2em;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: white;
+      padding: 2em;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    input, button {
+      width: 90%;
+      padding: 12px;
+      margin: 0.5em 0;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #2980b9;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 2em;
+      display: none;
+      font-size: 1.1em;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🔍 Search Vehicle Info</h2>
+    <input id="searchInput" placeholder="Search by Name, Mobile, Village, DL, etc.">
+    <button onclick="searchOrder()">Search</button>
+
+    <div id="searchResult" class="result">
+      <div id="orderDetails"></div>
+    </div>
+  </div>
+
+  <script>
+    let orders = [];
+
+    async function loadOrders() {
+      try {
+        const resp = await fetch('https://pothabattulavinod.github.io/mer/data.json');
+        if (!resp.ok) throw new Error(resp.status);
+        orders = await resp.json();
+      } catch (e) {
+        console.error('Failed to load data:', e);
+        document.body.innerHTML = '<p style="color:red">❌ Unable to load data. Please try again later.</p>';
+      }
+    }
+
+    function searchOrder() {
+      const input = document.getElementById('searchInput').value.trim().toLowerCase();
+      const res = document.getElementById('searchResult');
+      const det = document.getElementById('orderDetails');
+
+      const match = orders.find(o =>
+        Object.values(o).some(val => val.toLowerCase().includes(input))
+      );
+
+      if (!match) {
+        det.innerHTML = '<span style="color:red;">❌ No matching record found.</span>';
+      } else {
+        det.innerHTML = `
+          <strong>Name:</strong> ${match.name}<br>
+          <strong>Mobile:</strong> ${match.mobile}<br>
+          <strong>Village:</strong> ${match.village}<br>
+          <strong>Mandal:</strong> ${match.mandal}<br>
+          <strong>District:</strong> ${match.district}<br>
+          <strong>Vehicle RC:</strong> ${match.vehicleRC}<br>
+          <strong>DL:</strong> ${match.dl}<br>
+          <strong>Engine Number:</strong> ${match.engineNumber}<br>
+          <strong>Chassis Number:</strong> ${match.chassisNumber}
+        `;
+      }
+
+      res.style.display = 'block';
+    }
+
+    window.onload = loadOrders;
+  </script>
+</body>
+</html>
