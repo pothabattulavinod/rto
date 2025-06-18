@@ -6,17 +6,21 @@
 <body>
   <h2>Send My Location to GitHub</h2>
   <button onclick="sendLocation()">Update location.json</button>
+  <pre id="log"></pre>
 
   <script>
-    const token = "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"; // ⚠️ Only use in private/local testing
+    const token = "ghp_your_new_token_here"; // Replace with new token
     const owner = "pothabattulavinod";
     const repo = "rto";
     const path = "location.json";
     const apiURL = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+    const log = document.getElementById("log");
 
     async function sendLocation() {
+      log.textContent = "⏳ Getting location...";
+
       if (!navigator.geolocation) {
-        alert("Geolocation not supported.");
+        log.textContent = "❌ Geolocation not supported.";
         return;
       }
 
@@ -28,9 +32,8 @@
         };
 
         const contentEncoded = btoa(JSON.stringify(locationData, null, 2));
-
-        // Get existing file SHA
         let sha = null;
+
         try {
           const res = await fetch(apiURL, {
             headers: {
@@ -38,37 +41,43 @@
               Accept: "application/vnd.github+json"
             }
           });
+
           if (res.ok) {
             const data = await res.json();
             sha = data.sha;
+          } else if (res.status !== 404) {
+            const err = await res.json();
+            log.textContent = `❌ Failed to fetch file: ${err.message}`;
+            return;
           }
         } catch (e) {
           console.warn("location.json may not exist yet.");
         }
 
-        // PUT request to overwrite location.json
+        const payload = {
+          message: "Update live location",
+          content: contentEncoded,
+          ...(sha && { sha })
+        };
+
         const updateRes = await fetch(apiURL, {
           method: "PUT",
           headers: {
             Authorization: `Bearer ${token}`,
             Accept: "application/vnd.github+json"
           },
-          body: JSON.stringify({
-            message: "Update live location",
-            content: contentEncoded,
-            sha: sha // Include SHA if file exists
-          })
+          body: JSON.stringify(payload)
         });
 
         if (updateRes.ok) {
-          alert("✅ location.json updated successfully!");
+          log.textContent = "✅ location.json updated successfully!";
         } else {
           const err = await updateRes.json();
-          console.error(err);
-          alert("❌ Failed to update location.");
+          log.textContent = `❌ Failed to update: ${err.message}`;
+          console.error("GitHub error:", err);
         }
       }, err => {
-        alert("❌ Location access denied: " + err.message);
+        log.textContent = `❌ Location error: ${err.message}`;
       });
     }
   </script>
