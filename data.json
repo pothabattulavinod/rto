@@ -9,7 +9,17 @@
     "dl": "AP2020012345678",
     "engineNumber": "ENG987654321",
     "chassisNumber": "CHS1234567890",
-    "photo": "https://pothabattulavinod.github.io/rto/raviINS.jpeg"
+    "photos": [
+  {
+    "url": "https://pothabattulavinod.github.io/rto/raviINS.jpeg",
+    "caption": "Insurance Copy"
+  },
+  {
+    "url": "https://pothabattulavinod.github.io/rto/raviINS.jpeg",
+    "caption": "Driving License"
+  }
+]
+
   },
   {
     "name": "Ravi Devi",
