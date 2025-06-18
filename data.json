@@ -9,5 +9,16 @@
     "dl": "AP2020012345678",
     "engineNumber": "ENG987654321",
     "chassisNumber": "CHS1234567890"
+  },
+  {
+    "name": "Sunita Devi",
+    "mobile": "9123456789",
+    "village": "Rajapur",
+    "mandal": "Manthani",
+    "district": "Peddapalli",
+    "vehicleRC": "TS02CD5678",
+    "dl": "TS2021012345678",
+    "engineNumber": "ENG123456789",
+    "chassisNumber": "CHS9876543210"
   }
 ]
