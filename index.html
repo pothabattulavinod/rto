@@ -57,7 +57,7 @@
 
     async function loadOrders() {
       try {
-        const resp = await fetch('https://pothabattulavinod.github.io/mer/data.json');
+        const resp = await fetch('https://pothabattulavinod.github.io/rto/data.json');
         if (!resp.ok) throw new Error(resp.status);
         orders = await resp.json();
       } catch (e) {
