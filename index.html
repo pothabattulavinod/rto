@@ -39,12 +39,20 @@
       font-size: 1.1em;
       text-align: left;
     }
-    .result img {
-      max-width: 180px;
-      margin: 0.5em;
+    .photo-container {
       display: inline-block;
+      margin: 0.5em;
+      text-align: center;
+    }
+    .photo-container img {
+      max-width: 180px;
       border-radius: 8px;
       border: 2px solid #ccc;
+    }
+    .caption {
+      margin-top: 0.4em;
+      font-size: 0.9em;
+      color: #555;
     }
   </style>
 </head>
@@ -87,11 +95,24 @@
       if (!match) {
         det.innerHTML = '<span style="color:red;">❌ No matching record found.</span>';
       } else {
+        // Handle both formats: string array or array of {url, caption}
+        const photoHTML = match.photos && match.photos.length > 0
+          ? match.photos.map((photo, index) => {
+              const url = typeof photo === 'string' ? photo : photo.url;
+              const caption = typeof photo === 'string'
+                ? `Photo ${index + 1}`
+                : photo.caption || `Photo ${index + 1}`;
+              return `
+                <div class="photo-container">
+                  <img src="${url}" alt="Photo ${index + 1}">
+                  <div class="caption">${caption}</div>
+                </div>
+              `;
+            }).join('')
+          : '';
+
         det.innerHTML = `
-          ${match.photos && match.photos.length > 0 
-            ? match.photos.map(url => `<img src="${url}" alt="Photo">`).join('') 
-            : ''
-          }
+          ${photoHTML}
           <strong>Name:</strong> ${match.name}<br>
           <strong>Mobile:</strong> ${match.mobile}<br>
           <strong>Village:</strong> ${match.village}<br>
