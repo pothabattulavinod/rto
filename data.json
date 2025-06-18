@@ -10,19 +10,18 @@
     "engineNumber": "ENG987654321",
     "chassisNumber": "CHS1234567890",
     "photos": [
-  {
-    "url": "https://pothabattulavinod.github.io/rto/raviINS.jpeg",
-    "caption": "Insurance Copy"
+      {
+        "url": "https://pothabattulavinod.github.io/rto/raviINS.jpeg",
+        "caption": "Insurance Copy"
+      },
+      {
+        "url": "https://pothabattulavinod.github.io/rto/raviDL.jpeg",
+        "caption": "Driving License"
+      }
+    ]
   },
   {
-    "url": "https://pothabattulavinod.github.io/rto/raviINS.jpeg",
-    "caption": "Driving License"
-  }
-]
-
-  },
-  {
-    "name": "Ravi Devi",
+    "name": "Sunita Devi",
     "mobile": "9123456789",
     "village": "Rajapur",
     "mandal": "Manthani",
@@ -30,6 +29,7 @@
     "vehicleRC": "TS02CD5678",
     "dl": "TS2021012345678",
     "engineNumber": "ENG123456789",
-    "chassisNumber": "CHS9876543210"
+    "chassisNumber": "CHS9876543210",
+    "photos": []
   }
 ]
