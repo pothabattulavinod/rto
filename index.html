@@ -40,12 +40,11 @@
       text-align: left;
     }
     .result img {
-      max-width: 200px;
+      max-width: 180px;
+      margin: 0.5em;
+      display: inline-block;
       border-radius: 8px;
-      margin-bottom: 1em;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
+      border: 2px solid #ccc;
     }
   </style>
 </head>
@@ -89,7 +88,10 @@
         det.innerHTML = '<span style="color:red;">❌ No matching record found.</span>';
       } else {
         det.innerHTML = `
-          ${match.photo ? `<img src="${match.photo}" alt="Photo">` : ''}
+          ${match.photos && match.photos.length > 0 
+            ? match.photos.map(url => `<img src="${url}" alt="Photo">`).join('') 
+            : ''
+          }
           <strong>Name:</strong> ${match.name}<br>
           <strong>Mobile:</strong> ${match.mobile}<br>
           <strong>Village:</strong> ${match.village}<br>
