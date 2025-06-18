@@ -39,6 +39,14 @@
       font-size: 1.1em;
       text-align: left;
     }
+    .result img {
+      max-width: 200px;
+      border-radius: 8px;
+      margin-bottom: 1em;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
   </style>
 </head>
 <body>
@@ -72,13 +80,16 @@
       const det = document.getElementById('orderDetails');
 
       const match = orders.find(o =>
-        Object.values(o).some(val => val.toLowerCase().includes(input))
+        Object.values(o).some(val =>
+          typeof val === "string" && val.toLowerCase().includes(input)
+        )
       );
 
       if (!match) {
         det.innerHTML = '<span style="color:red;">❌ No matching record found.</span>';
       } else {
         det.innerHTML = `
+          ${match.photo ? `<img src="${match.photo}" alt="Photo">` : ''}
           <strong>Name:</strong> ${match.name}<br>
           <strong>Mobile:</strong> ${match.mobile}<br>
           <strong>Village:</strong> ${match.village}<br>
